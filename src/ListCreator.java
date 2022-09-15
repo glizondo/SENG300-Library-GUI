@@ -1,6 +1,8 @@
 
 //Imported ArrayList package
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -23,8 +25,10 @@ public class ListCreator {
 	}
 	
 	public void readFile()  {
+		
 		try  {
-			Scanner input = new Scanner(new File("books3.csv"));
+			FileInputStream fileReader = new FileInputStream("books4.csv");
+			Scanner input = new Scanner(fileReader);
 			input.nextLine();
 			while(input.hasNext())  {
 				String line = input.nextLine();
@@ -62,9 +66,11 @@ public class ListCreator {
 				
 			}
 		}
+
 		catch(IOException e) {
 			System.out.println("Error reading file");
 		}
+		
 	}
 
 	public static void main(String[] args) {
