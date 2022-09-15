@@ -55,4 +55,17 @@ public class Book {
 		this.smallImageURL = smallImageURL;
 	}
 
+	@Override
+	public String toString() {
+		return "Book [bookId=" + bookId + ", bookGoodreadsId=" + bookGoodreadsId + ", bestBookId=" + bestBookId
+				+ ", workId=" + workId + ", booksCount=" + booksCount + ", ISBN=" + ISBN + ", ISBN13=" + ISBN13
+				+ ", authors=" + authors + ", originalPublicationYear=" + originalPublicationYear + ", originalTitle="
+				+ originalTitle + ", title=" + title + ", languageCode=" + languageCode + ", averageRating="
+				+ averageRating + ", ratingsCount=" + ratingsCount + ", workRatingsCount=" + workRatingsCount
+				+ ", workTextReviewsCount=" + workTextReviewsCount + ", ratings1=" + ratings1 + ", ratings2=" + ratings2
+				+ ", ratings3=" + ratings3 + ", ratings4=" + ratings4 + ", ratings5=" + ratings5 + ", imageURL="
+				+ imageURL + ", smallImageURL=" + smallImageURL + "]";
+	}
+		
+	
 }
