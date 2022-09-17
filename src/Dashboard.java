@@ -48,6 +48,7 @@ public class Dashboard {
 	public Dashboard() {
 		initialize();
 		loadBooks();
+
 	}
 
 	/**
@@ -71,9 +72,10 @@ public class Dashboard {
 		text.setWrapStyleWord(true); // Sets the style of wrapping used if the text area is wrapping lines
 		panel.add(scrollPane);
 		frame.add(panel);
-
 		frame.setSize(500, 500);
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 
 	public void createMenuBar() {
@@ -166,7 +168,6 @@ public class Dashboard {
 		sortMenu.add(sortAscendingDatePublished);
 		sortMenu.add(sortDescendingDatePublished);
 		frame.setJMenuBar(menuBar);
-
 		exit.addActionListener(new ExitListener());
 		// add.addActionListener(new AddBookListener());
 		// purchase.addActionListener(new PurchaseBookListener());
@@ -176,7 +177,25 @@ public class Dashboard {
 		// searchAuthor.addActionListener(new SearchAuthorListener());
 		// printAll.addActionListener(new PrintAllListener());
 
+		sortAscendingAuthor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+
+				library.readFile();
+				List<Book> books = library.getList();
+				library.selectionSortAscendingAuthor(books);
+				String output = "";
+
+				for (int i = 0; i < books.size(); i++) {
+					output += books.get(i) + "\n";
+				}
+				text.setText(output);
+			}
+
+		});
+
 	}
+	
+
 
 	private void loadBooks() {
 		library.readFile();
@@ -213,6 +232,7 @@ public class Dashboard {
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "Please enter a valid ISBN");
 			}
+
 		}
 
 	}

@@ -101,42 +101,50 @@ public class ListCreator {
 		return list;
 	}
 
-//	public int indexHighestAscendingAuthor(List<Book> list, int start) {
-//		int highIndex = start;
-//		for (int i = start; i < list.size(); i++) {
-//			if (list.get(i).getAuthors().startsWith("A") == list.get(highIndex).getAuthors().startsWith("A")) {
-//				highIndex = i;
-//			}
-//		}
-//		return highIndex;
-//	}
-//
-//	public List selectionSortAscendingAuthor(List<Book> list) {
-//		for (int i = 0; i < list.size(); i++) {
-//			int j = indexHighestAverageRating(list, i);
-//			swapElements(list, i, j);
-//		}
-//
-//		return list;
-//	}
+	public int indexHighestAscendingPublishDate(List<Book> list, int start) {
+		int highIndex = start;
+		for (int i = start; i < list.size(); i++) {
+			if (list.get(i).getOriginalPublicationYear() > list.get(highIndex).getOriginalPublicationYear()) {
+				highIndex = i;
+			}
+		}
+		return highIndex;
+	}
+
+	public List selectionSortAscendingPublishDate(List<Book> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int j = indexHighestAscendingPublishDate(list, i);
+			swapElements(list, i, j);
+		}
+		return list;
+	}
+
+	public int indexHighestDescendingPublishDate(List<Book> list, int start) {
+		int highIndex = start;
+		for (int i = start; i < list.size(); i++) {
+			if (list.get(i).getOriginalPublicationYear() < list.get(highIndex).getOriginalPublicationYear()) {
+				highIndex = i;
+			}
+		}
+		return highIndex;
+	}
+
+	public List selectionSortDescendingPublishDate(List<Book> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int j = indexHighestAscendingPublishDate(list, i);
+			swapElements(list, i, j);
+		}
+		return list;
+	}
 
 	public List selectionSortAscendingAuthor(List<Book> list) {
-		// One by one move boundary of unsorted subarray
 		for (int i = 0; i < list.size(); i++) {
 
-			// Find the minimum element in unsorted array
 			int min_index = i;
 			String minStr = list.get(i).getAuthors();
 			for (int j = i + 1; j < list.size(); j++) {
 
-				/*
-				 * compareTo() will return a -ve value, if string1 (arr[j]) is smaller than
-				 * string2 (minStr)
-				 */
-				// If arr[j] is smaller than minStr
-
 				if (list.get(j).getAuthors().compareTo(minStr) < 0) {
-					// Make arr[j] as minStr and update min_idx
 					minStr = list.get(j).getAuthors();
 					min_index = j;
 					System.out.println("MIN INDEX" + min_index);
@@ -145,8 +153,31 @@ public class ListCreator {
 				}
 			}
 
-			// Swapping the minimum element
-			// found with the first element.
+			if (min_index != i) {
+				Book temp = list.get(min_index);
+				list.set(min_index, list.get(i));
+				list.set(i, temp);
+			}
+		}
+		return list;
+	}
+
+	public List selectionSortDescendingAuthor(List<Book> list) {
+		for (int i = 0; i < list.size(); i++) {
+
+			int min_index = i;
+			String minStr = list.get(i).getAuthors();
+			for (int j = i + 1; j < list.size(); j++) {
+
+				if (list.get(j).getAuthors().compareTo(minStr) > 0) {
+					minStr = list.get(j).getAuthors();
+					min_index = j;
+					System.out.println("MIN INDEX" + min_index);
+					System.out.println(j);
+
+				}
+			}
+
 			if (min_index != i) {
 				Book temp = list.get(min_index);
 				list.set(min_index, list.get(i));
@@ -170,7 +201,7 @@ public class ListCreator {
 //
 //		}
 //		lce.getTop10Books();
-		System.out.println(lce.selectionSortAscendingAuthor(list));
+//		System.out.println(lce.selectionSortDescendingPublishDate(list));
 
 	}
 }
