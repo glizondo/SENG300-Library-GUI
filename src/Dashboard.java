@@ -23,6 +23,7 @@ public class Dashboard {
 	private JMenu bookMenu; // Created book menu
 	private JMenu searchMenu; // Created search menu
 	private JMenu printMenu; // Created print menu
+	private JMenu sortMenu; // Created print menu
 	private JMenuItem exit;
 	private JMenuItem add;
 	private JMenuItem purchase;
@@ -31,6 +32,10 @@ public class Dashboard {
 	private JMenuItem searchID;
 	private JMenuItem searchAuthor;
 	private JMenuItem printAll;
+	private JMenuItem sortAscendingAuthor;
+	private JMenuItem sortDescendingAuthor;
+	private JMenuItem sortAscendingDatePublished;
+	private JMenuItem sortDescendingDatePublished;
 	private JPanel panel;
 	private JLabel welcome;
 	private JScrollPane scrollPane;
@@ -54,7 +59,7 @@ public class Dashboard {
 
 		panel = new JPanel();
 		panel.setBackground(new Color(0, 0, 155));
-		welcome = new JLabel("Welcome to the Book Library App");
+		welcome = new JLabel("Welcome to the Book Library App. Top 10 books based on ratings");
 		welcome.setForeground(Color.cyan);
 		welcome.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panel.add(welcome);
@@ -88,10 +93,15 @@ public class Dashboard {
 		searchMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
 		printMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
 
+		sortMenu = new JMenu("Sort All");
+		sortMenu.setForeground(Color.white);
+		sortMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
+
 		menuBar.add(fileMenu);
 		menuBar.add(bookMenu);
 		menuBar.add(searchMenu);
 		menuBar.add(printMenu);
+		menuBar.add(sortMenu);
 
 		exit = new JMenuItem("Exit");
 		add = new JMenuItem("Add");
@@ -101,6 +111,10 @@ public class Dashboard {
 		searchID = new JMenuItem("ISBN");
 		searchAuthor = new JMenuItem("Author");
 		printAll = new JMenuItem("All");
+		sortAscendingAuthor = new JMenuItem("Ascending by Author");
+		sortDescendingAuthor = new JMenuItem("Descending by Author");
+		sortAscendingDatePublished = new JMenuItem("Ascending by Published Date");
+		sortDescendingDatePublished = new JMenuItem("Descending by Published Date");
 
 		exit.setBackground(Color.cyan);
 		exit.setForeground(Color.blue);
@@ -126,6 +140,18 @@ public class Dashboard {
 		printAll.setBackground(Color.CYAN);
 		printAll.setForeground(Color.blue);
 		printAll.setFont(new Font("SansSerif", Font.BOLD, 16));
+		sortAscendingAuthor.setBackground(Color.CYAN);
+		sortAscendingAuthor.setForeground(Color.blue);
+		sortAscendingAuthor.setFont(new Font("SansSerif", Font.BOLD, 16));
+		sortDescendingAuthor.setBackground(Color.CYAN);
+		sortDescendingAuthor.setForeground(Color.blue);
+		sortDescendingAuthor.setFont(new Font("SansSerif", Font.BOLD, 16));
+		sortAscendingDatePublished.setBackground(Color.CYAN);
+		sortAscendingDatePublished.setForeground(Color.blue);
+		sortAscendingDatePublished.setFont(new Font("SansSerif", Font.BOLD, 16));
+		sortDescendingDatePublished.setBackground(Color.CYAN);
+		sortDescendingDatePublished.setForeground(Color.blue);
+		sortDescendingDatePublished.setFont(new Font("SansSerif", Font.BOLD, 16));
 
 		fileMenu.add(exit);
 		bookMenu.add(add);
@@ -135,7 +161,10 @@ public class Dashboard {
 		searchMenu.add(searchID);
 		searchMenu.add(searchAuthor);
 		printMenu.add(printAll);
-
+		sortMenu.add(sortAscendingAuthor);
+		sortMenu.add(sortDescendingAuthor);
+		sortMenu.add(sortAscendingDatePublished);
+		sortMenu.add(sortDescendingDatePublished);
 		frame.setJMenuBar(menuBar);
 
 		exit.addActionListener(new ExitListener());
