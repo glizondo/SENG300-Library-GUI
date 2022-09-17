@@ -242,8 +242,12 @@ public class Book implements Comparable<Book> {
 
 	@Override
 	public String toString() {
-		return "Book Id: " + bookId + "\n" + "ISBN: " + ISBN + "\n" + "Title: " + originalTitle + "\n" + "Authors: "
-				+ authors + "\n" + "Publication Year: " + originalPublicationYear + "\n";
+		return "Book Id: " + bookId + "\n" +
+				"ISBN: " + ISBN + "\n" +
+				"Title: " + originalTitle + "\n" +
+				"Authors: " + authors + "\n" +
+				"Publication Year: " + originalPublicationYear + "\n" +
+				"Average Rating: " + averageRating + "\n";
 	}
 
 	@Override

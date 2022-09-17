@@ -59,7 +59,7 @@ public class Dashboard {
 
 		panel = new JPanel();
 		panel.setBackground(new Color(0, 0, 155));
-		welcome = new JLabel("Welcome to the Book Library App. Top 10 books based on ratings");
+		welcome = new JLabel("Welcome to the Book Library App");
 		welcome.setForeground(Color.cyan);
 		welcome.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panel.add(welcome);
@@ -113,8 +113,8 @@ public class Dashboard {
 		printAll = new JMenuItem("All");
 		sortAscendingAuthor = new JMenuItem("Ascending by Author");
 		sortDescendingAuthor = new JMenuItem("Descending by Author");
-		sortAscendingDatePublished = new JMenuItem("Ascending by Published Date");
-		sortDescendingDatePublished = new JMenuItem("Descending by Published Date");
+		sortAscendingDatePublished = new JMenuItem("Ascending by Published Year");
+		sortDescendingDatePublished = new JMenuItem("Descending by Published Year");
 
 		exit.setBackground(Color.cyan);
 		exit.setForeground(Color.blue);
@@ -175,7 +175,10 @@ public class Dashboard {
 		searchID.addActionListener(new SearchIDListener());
 		// searchAuthor.addActionListener(new SearchAuthorListener());
 		// printAll.addActionListener(new PrintAllListener());
-
+		sortAscendingAuthor.addActionListener(new SortAscendingAuthorListener());
+		sortDescendingAuthor.addActionListener(new SortDescendingAuthorListener());
+		sortAscendingDatePublished.addActionListener(new SortAscendingYearListener());
+		sortDescendingDatePublished.addActionListener(new SortDescendingYearListener());
 	}
 
 	private void loadBooks() {
@@ -213,6 +216,66 @@ public class Dashboard {
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "Please enter a valid ISBN");
 			}
+		}
+
+	}
+	
+	private class SortAscendingAuthorListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			List<Book> books = library.getList();
+			library.selectionSortAscendingAuthor(books);
+			String output = "";
+			for (int i = 0; i < 10; i++) {
+				output += books.get(i) + "\n";
+			}
+			text.setText(output);
+		}
+
+	}
+	
+	private class SortDescendingAuthorListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			List<Book> books = library.getList();
+			library.selectionSortDescendingAuthor(books);
+			String output = "";
+			for (int i = 0; i < 10; i++) {
+				output += books.get(i) + "\n";
+			}
+			text.setText(output);
+		}
+
+	}
+	
+	private class SortAscendingYearListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			List<Book> books = library.getList();
+			library.selectionSortAscendingYear(books);
+			String output = "";
+			for (int i = 0; i < 10; i++) {
+				output += books.get(i) + "\n";
+			}
+			text.setText(output);
+		}
+
+	}
+	
+	private class SortDescendingYearListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			List<Book> books = library.getList();
+			library.selectionSortDescendingYear(books);
+			String output = "";
+			for (int i = 0; i < 10; i++) {
+				output += books.get(i) + "\n";
+			}
+			text.setText(output);
 		}
 
 	}

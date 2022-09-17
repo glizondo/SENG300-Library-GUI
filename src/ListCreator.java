@@ -120,7 +120,7 @@ public class ListCreator {
 //		return list;
 //	}
 
-	public List selectionSortAscendingAuthor(List<Book> list) {
+	public List<Book> selectionSortAscendingAuthor(List<Book> list) {
 		// One by one move boundary of unsorted subarray
 		for (int i = 0; i < list.size(); i++) {
 
@@ -155,6 +155,114 @@ public class ListCreator {
 		}
 		return list;
 	}
+	
+	public List<Book> selectionSortDescendingAuthor(List<Book> list) {
+		// One by one move boundary of unsorted subarray
+		for (int i = 0; i < list.size(); i++) {
+
+			// Find the maximum element in unsorted array
+			int max_index = i;
+			String maxStr = list.get(i).getAuthors();
+			for (int j = i + 1; j < list.size(); j++) {
+
+				/*
+				 * compareTo() will return a -ve value, if string1 (arr[j]) is larger than
+				 * string2 (maxStr)
+				 */
+				// If arr[j] is larger than maxStr
+
+				if (list.get(j).getAuthors().compareTo(maxStr) > 0) {
+					// Make arr[j] as maxStr and update max_idx
+					maxStr = list.get(j).getAuthors();
+					max_index = j;
+					System.out.println("MAX INDEX" + max_index);
+					System.out.println(j);
+
+				}
+			}
+
+			// Swapping the maximum element
+			// found with the first element.
+			if (max_index != i) {
+				Book temp = list.get(max_index);
+				list.set(max_index, list.get(i));
+				list.set(i, temp);
+			}
+		}
+		return list;
+	}
+	
+	public List<Book> selectionSortAscendingYear(List<Book> list) {
+		// One by one move boundary of unsorted subarray
+		for (int i = 0; i < list.size(); i++) {
+
+			// Find the minimum element in unsorted array
+			int min_index = i;
+			double minStr = list.get(i).getOriginalPublicationYear();
+			for (int j = i + 1; j < list.size(); j++) {
+
+				/*
+				 * compareTo() will return a -ve value, if string1 (arr[j]) is smaller than
+				 * string2 (minStr)
+				 */
+				// If arr[j] is smaller than minStr
+
+				if (list.get(j).getOriginalPublicationYear() < minStr) {
+					// Make arr[j] as minStr and update min_idx
+					minStr = list.get(j).getOriginalPublicationYear();
+					min_index = j;
+					System.out.println("MIN INDEX" + min_index);
+					System.out.println(j);
+
+				}
+			}
+
+			// Swapping the minimum element
+			// found with the first element.
+			if (min_index != i) {
+				Book temp = list.get(min_index);
+				list.set(min_index, list.get(i));
+				list.set(i, temp);
+			}
+		}
+		return list;
+	}
+	
+	public List<Book> selectionSortDescendingYear(List<Book> list) {
+		// One by one move boundary of unsorted subarray
+		for (int i = 0; i < list.size(); i++) {
+
+			// Find the maximum element in unsorted array
+			int max_index = i;
+			double maxStr = list.get(i).getOriginalPublicationYear();
+			for (int j = i + 1; j < list.size(); j++) {
+
+				/*
+				 * compareTo() will return a -ve value, if string1 (arr[j]) is larger than
+				 * string2 (maxStr)
+				 */
+				// If arr[j] is larger than maxStr
+
+				if (list.get(j).getOriginalPublicationYear() > maxStr) {
+					// Make arr[j] as maxStr and update max_idx
+					maxStr = list.get(j).getOriginalPublicationYear();
+					max_index = j;
+					System.out.println("MAX INDEX" + max_index);
+					System.out.println(j);
+
+				}
+			}
+
+			// Swapping the maximum element
+			// found with the first element.
+			if (max_index != i) {
+				Book temp = list.get(max_index);
+				list.set(max_index, list.get(i));
+				list.set(i, temp);
+			}
+		}
+		return list;
+	}
 
 	public static void main(String[] args) {
 		ListCreator lce = new ListCreator();
@@ -171,6 +279,9 @@ public class ListCreator {
 //		}
 //		lce.getTop10Books();
 		System.out.println(lce.selectionSortAscendingAuthor(list));
+		System.out.println(lce.selectionSortDescendingAuthor(list));
+		System.out.println(lce.selectionSortAscendingYear(list));
+		System.out.println(lce.selectionSortDescendingYear(list));
 
 	}
 }
