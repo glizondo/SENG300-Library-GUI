@@ -30,7 +30,7 @@ public class ListCreator {
 	public void readFile() {
 
 		try {
-			FileInputStream fileReader = new FileInputStream("books.csv");
+			FileInputStream fileReader = new FileInputStream("books_complete.csv");
 			Scanner input = new Scanner(fileReader);
 			input.nextLine();
 			while (input.hasNext()) {
