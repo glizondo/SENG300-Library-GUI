@@ -263,7 +263,26 @@ public class ListCreator {
 		}
 		return list;
 	}
+	
+	public Book searchBookID(int id)  {
+		for(Book book: list)  {
+			if(book.getBookId() == id)  {
+				return book;
+			}
+		}
+		return null;
+	}
+	
 
+	public Book searchBookISBN(String isbn)  {
+		for(Book book: list)  {
+			if(book.getISBN().equals(isbn))  {
+				return book;
+			}
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) {
 		ListCreator lce = new ListCreator();
 		// @SuppressWarnings("rawtypes")

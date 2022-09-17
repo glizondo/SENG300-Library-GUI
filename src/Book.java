@@ -239,7 +239,8 @@ public class Book implements Comparable<Book> {
 	public void setSmallImageURL(String smallImageURL) {
 		this.smallImageURL = smallImageURL;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return "Book Id: " + bookId + "\n" +

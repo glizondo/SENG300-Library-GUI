@@ -30,7 +30,7 @@ public class Dashboard {
 	private JMenuItem update;
 	private JMenuItem remove;
 	private JMenuItem searchID;
-	private JMenuItem searchAuthor;
+	private JMenuItem searchISBN;
 	private JMenuItem printAll;
 	private JMenuItem sortAscendingAuthor;
 	private JMenuItem sortDescendingAuthor;
@@ -71,7 +71,8 @@ public class Dashboard {
 		text.setWrapStyleWord(true); // Sets the style of wrapping used if the text area is wrapping lines
 		panel.add(scrollPane);
 		frame.add(panel);
-
+		
+		frame.setTitle("Book Library App");
 		frame.setSize(500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -80,36 +81,38 @@ public class Dashboard {
 		menuBar = new JMenuBar();
 		menuBar.setBackground(new Color(0, 0, 255));
 		menuBar.setForeground(Color.white);
+		
 		fileMenu = new JMenu("File");
 		bookMenu = new JMenu("Book");
 		searchMenu = new JMenu("Search");
+		sortMenu = new JMenu("Sort");
 		printMenu = new JMenu("Print");
+		
 		fileMenu.setForeground(Color.white);
 		bookMenu.setForeground(Color.white);
 		searchMenu.setForeground(Color.white);
+		sortMenu.setForeground(Color.white);
 		printMenu.setForeground(Color.white);
+		
 		fileMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
 		bookMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
 		searchMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
-		printMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
-
-		sortMenu = new JMenu("Sort All");
-		sortMenu.setForeground(Color.white);
 		sortMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
+		printMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
 
 		menuBar.add(fileMenu);
 		menuBar.add(bookMenu);
 		menuBar.add(searchMenu);
-		menuBar.add(printMenu);
 		menuBar.add(sortMenu);
-
+		menuBar.add(printMenu);
+		
 		exit = new JMenuItem("Exit");
 		add = new JMenuItem("Add");
 		purchase = new JMenuItem("Purchase");
 		update = new JMenuItem("Update");
 		remove = new JMenuItem("Remove");
-		searchID = new JMenuItem("ISBN");
-		searchAuthor = new JMenuItem("Author");
+		searchID = new JMenuItem("Search By ID");
+		searchISBN = new JMenuItem("Search By ISBN");
 		printAll = new JMenuItem("All");
 		sortAscendingAuthor = new JMenuItem("Ascending by Author");
 		sortDescendingAuthor = new JMenuItem("Descending by Author");
@@ -134,9 +137,9 @@ public class Dashboard {
 		searchID.setBackground(Color.CYAN);
 		searchID.setForeground(Color.blue);
 		searchID.setFont(new Font("SansSerif", Font.BOLD, 16));
-		searchAuthor.setBackground(Color.CYAN);
-		searchAuthor.setForeground(Color.blue);
-		searchAuthor.setFont(new Font("SansSerif", Font.BOLD, 16));
+		searchISBN.setBackground(Color.CYAN);
+		searchISBN.setForeground(Color.blue);
+		searchISBN.setFont(new Font("SansSerif", Font.BOLD, 16));
 		printAll.setBackground(Color.CYAN);
 		printAll.setForeground(Color.blue);
 		printAll.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -159,7 +162,7 @@ public class Dashboard {
 		bookMenu.add(update);
 		bookMenu.add(remove);
 		searchMenu.add(searchID);
-		searchMenu.add(searchAuthor);
+		searchMenu.add(searchISBN);
 		printMenu.add(printAll);
 		sortMenu.add(sortAscendingAuthor);
 		sortMenu.add(sortDescendingAuthor);
@@ -173,8 +176,8 @@ public class Dashboard {
 		// update.addActionListener(new UpdateBookListener());
 		// remove.addActionListener(new RemoveBookListener());
 		searchID.addActionListener(new SearchIDListener());
-		// searchAuthor.addActionListener(new SearchAuthorListener());
-		// printAll.addActionListener(new PrintAllListener());
+		searchISBN.addActionListener(new SearchISBNListener());
+		printAll.addActionListener(new PrintAllListener());
 		sortAscendingAuthor.addActionListener(new SortAscendingAuthorListener());
 		sortDescendingAuthor.addActionListener(new SortDescendingAuthorListener());
 		sortAscendingDatePublished.addActionListener(new SortAscendingYearListener());
@@ -200,19 +203,63 @@ public class Dashboard {
 		}
 
 	}
+	
+	private class PrintAllListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			List<Book> books = library.getList();
+			library.selectionSortAverageRating(books);
+			String output = "";
+			for (int i = 0; i < 10; i++) {
+				output += books.get(i) + "\n";
+			}
+			text.setText(output);
+		}
+
+	}
+	
 
 	private class SearchIDListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				String ID = JOptionPane.showInputDialog("Enter ISBN");
-				int ISBN = Integer.parseInt(ID.trim());
-				/*
-				 * Book book = library.searchBook(ISBN); if(book != null) {
-				 * text.setText(book.toString()); } else { JOptionPane.showMessageDialog(null,
-				 * "There is no book with that ISBN"); }
-				 */
+				String ID = JOptionPane.showInputDialog("Enter Book ID");
+				int id = Integer.parseInt(ID.trim());
+				
+				 Book book = library.searchBookID(id); 
+				 if(book != null) {
+					 text.setText(book.toString());
+				 } 
+				 else { 
+					 JOptionPane.showMessageDialog(null, "There is no book with that ID"); 
+				 }
+				 
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, "Please enter a valid ID");
+			}
+		}
+
+	}
+	
+
+	private class SearchISBNListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String ISBN = JOptionPane.showInputDialog("Enter Book ISBN");
+				//int id = Integer.parseInt(ID.trim());
+				
+				 Book book = library.searchBookISBN(ISBN); 
+				 if(book != null) {
+					 text.setText(book.toString());
+				 } 
+				 else { 
+					 JOptionPane.showMessageDialog(null, "There is no book with that ISBN"); 
+				 }
+				 
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "Please enter a valid ISBN");
 			}
