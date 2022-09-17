@@ -9,13 +9,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 public class ListCreator {
 	@SuppressWarnings("rawtypes")
-	private List <Book> list;
+	private List<Book> list;
 
 	@SuppressWarnings("rawtypes")
 	public ListCreator() {
 //		Changed from LinkedList to ArrayList
+//		list = new LinkedList<Book>();
 		list = new ArrayList<Book>();
 	}
 
@@ -23,18 +26,18 @@ public class ListCreator {
 	public List<Book> getList() {
 		return list;
 	}
-	
-	public void readFile()  {
-		
-		try  {
+
+	public void readFile() {
+
+		try {
 			FileInputStream fileReader = new FileInputStream("books.csv");
 			Scanner input = new Scanner(fileReader);
 			input.nextLine();
-			while(input.hasNext())  {
+			while (input.hasNext()) {
 				String line = input.nextLine();
 				System.out.println(line);
 				String[] fields = line.split(",");
-				if(fields.length==23) {
+				if (fields.length == 23) {
 					int bookId = Integer.parseInt(fields[0]);
 					int bookGoodreadsId = Integer.parseInt(fields[1]);
 					int bestBookId = Integer.parseInt(fields[2]);
@@ -58,30 +61,60 @@ public class ListCreator {
 					int ratings5 = Integer.parseInt(fields[20]);
 					String imageURL = fields[21];
 					String smallImageURL = fields[22];
-			
-					Book book = new Book(bookId, bookGoodreadsId, bestBookId, workId, booksCount, iSBN, iSBN13,
-							authors, originalPublicationYear, originalTitle, title, languageCode,
-							averageRating, ratingsCount, workRatingsCount, workTextReviewsCount, ratings1,
-							ratings2, ratings3, ratings4, ratings5, imageURL, smallImageURL);
+
+					Book book = new Book(bookId, bookGoodreadsId, bestBookId, workId, booksCount, iSBN, iSBN13, authors,
+							originalPublicationYear, originalTitle, title, languageCode, averageRating, ratingsCount,
+							workRatingsCount, workTextReviewsCount, ratings1, ratings2, ratings3, ratings4, ratings5,
+							imageURL, smallImageURL);
 					list.add(book);
 				}
 			}
 		}
 
-		catch(IOException e) {
+		catch (IOException e) {
 			System.out.println("Error reading file");
 		}
-		
+
+	}
+
+	public List getTop10Books() {
+		ListCreator lce = new ListCreator();
+		lce.readFile();
+		List<Book> list = lce.getList();
+		selectionSortAverageRating(list);
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getAverageRating());
+
+
+		}
+
+		return list;
+	}
+
+	public void selectionSortAverageRating(List<Book> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int pos = i;
+			for (int j = i; j < list.size(); j++) {
+				if (list.get(j).getAverageRating() < list.get(pos).getAverageRating()) {
+					pos = j;
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {
 		ListCreator lce = new ListCreator();
-		//@SuppressWarnings("rawtypes")
+		// @SuppressWarnings("rawtypes")
 		lce.readFile();
 		List<Book> list = lce.getList();
-		for(Book b:list)  {
-			System.out.println(b);
+//		for (Book b : list) {
+//			System.out.println(b);
+//		}
+//		System.out.println(list.get(12));
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getAverageRating());
+
 		}
-		
+
 	}
 }
