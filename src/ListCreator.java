@@ -73,6 +73,16 @@ public class ListCreator {
 		}
 		
 	}
+	
+	public List getTop10Books() {
+		
+		list = new ArrayList<Book>();
+//		list = new LinkedList<Book>();
+//		list.get(12)
+
+		
+		return list;
+	}
 
 	public static void main(String[] args) {
 		ListCreator lce = new ListCreator();
