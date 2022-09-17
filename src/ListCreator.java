@@ -77,29 +77,29 @@ public class ListCreator {
 
 	}
 
-	public List getTop10Books() {
-		ListCreator lce = new ListCreator();
-		lce.readFile();
-		List<Book> list = lce.getList();
-		selectionSortAverageRating(list);
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getAverageRating());
-
-
-		}
-
-		return list;
+	public void swapElements(List<Book> list, int i, int j) {
+		Book temp = list.get(i);
+		list.set(i, list.get(j));
+		list.set(j, temp);
 	}
 
-	public void selectionSortAverageRating(List<Book> list) {
-		for (int i = 0; i < list.size(); i++) {
-			int pos = i;
-			for (int j = i; j < list.size(); j++) {
-				if (list.get(j).getAverageRating() < list.get(pos).getAverageRating()) {
-					pos = j;
-				}
+	public int indexHighestAverageRating(List<Book> list, int start) {
+		int highIndex = start;
+		for (int i = start; i < list.size(); i++) {
+			if (list.get(i).getAverageRating() > list.get(highIndex).getAverageRating()) {
+				highIndex = i;
 			}
 		}
+		System.out.println("Lowest index" + highIndex);
+		return highIndex;
+	}
+
+	public List selectionSortAverageRating(List<Book> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int j = indexHighestAverageRating(list, i);
+			swapElements(list, i, j);
+		}
+		return list;
 	}
 
 	public static void main(String[] args) {
@@ -111,10 +111,12 @@ public class ListCreator {
 //			System.out.println(b);
 //		}
 //		System.out.println(list.get(12));
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getAverageRating());
-
-		}
+//		for (int i = 0; i < list.size(); i++) {
+//			System.out.println(list.get(i).getAverageRating());
+//
+//		}
+//		lce.getTop10Books();
+		System.out.println(lce.selectionSortAverageRating(list));
 
 	}
 }
