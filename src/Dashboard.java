@@ -3,7 +3,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,7 +50,11 @@ public class Dashboard {
 	 */
 	public Dashboard() {
 		initialize();
-		loadBooks();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Type 1 to use LinkedList - Type 2 to use ArrayList");
+		int answer = scanner.nextInt();
+		loadBooks(answer);
+		scanner.close();
 	}
 
 	/**
@@ -71,7 +78,7 @@ public class Dashboard {
 		text.setWrapStyleWord(true); // Sets the style of wrapping used if the text area is wrapping lines
 		panel.add(scrollPane);
 		frame.add(panel);
-		
+
 		frame.setTitle("Book Library App");
 		frame.setSize(500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,19 +88,19 @@ public class Dashboard {
 		menuBar = new JMenuBar();
 		menuBar.setBackground(new Color(0, 0, 255));
 		menuBar.setForeground(Color.white);
-		
+
 		fileMenu = new JMenu("File");
 		bookMenu = new JMenu("Book");
 		searchMenu = new JMenu("Search");
 		sortMenu = new JMenu("Sort");
 		printMenu = new JMenu("Print");
-		
+
 		fileMenu.setForeground(Color.white);
 		bookMenu.setForeground(Color.white);
 		searchMenu.setForeground(Color.white);
 		sortMenu.setForeground(Color.white);
 		printMenu.setForeground(Color.white);
-		
+
 		fileMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
 		bookMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
 		searchMenu.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -105,7 +112,7 @@ public class Dashboard {
 		menuBar.add(searchMenu);
 		menuBar.add(sortMenu);
 		menuBar.add(printMenu);
-		
+
 		exit = new JMenuItem("Exit");
 		add = new JMenuItem("Add");
 		purchase = new JMenuItem("Purchase");
@@ -184,10 +191,13 @@ public class Dashboard {
 		sortDescendingDatePublished.addActionListener(new SortDescendingYearListener());
 	}
 
-	private void loadBooks() {
+	private void loadBooks(int answer) {
+		library.createSpecificList(answer);
 		library.readFile();
 		List<Book> books = library.getList();
 		library.selectionSortAverageRating(books);
+		System.out.println(library.getClass());
+		System.out.println(books.getClass());
 		String output = "";
 		for (int i = 0; i < 10; i++) {
 			output += books.get(i) + "\n";
@@ -203,7 +213,7 @@ public class Dashboard {
 		}
 
 	}
-	
+
 	private class PrintAllListener implements ActionListener {
 
 		@Override
@@ -218,7 +228,6 @@ public class Dashboard {
 		}
 
 	}
-	
 
 	private class SearchIDListener implements ActionListener {
 
@@ -227,22 +236,20 @@ public class Dashboard {
 			try {
 				String ID = JOptionPane.showInputDialog("Enter Book ID");
 				int id = Integer.parseInt(ID.trim());
-				
-				 Book book = library.searchBookID(id); 
-				 if(book != null) {
-					 text.setText(book.toString());
-				 } 
-				 else { 
-					 JOptionPane.showMessageDialog(null, "There is no book with that ID"); 
-				 }
-				 
+
+				Book book = library.searchBookID(id);
+				if (book != null) {
+					text.setText(book.toString());
+				} else {
+					JOptionPane.showMessageDialog(null, "There is no book with that ID");
+				}
+
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "Please enter a valid ID");
 			}
 		}
 
 	}
-	
 
 	private class SearchISBNListener implements ActionListener {
 
@@ -250,23 +257,22 @@ public class Dashboard {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				String ISBN = JOptionPane.showInputDialog("Enter Book ISBN");
-				//int id = Integer.parseInt(ID.trim());
-				
-				 Book book = library.searchBookISBN(ISBN); 
-				 if(book != null) {
-					 text.setText(book.toString());
-				 } 
-				 else { 
-					 JOptionPane.showMessageDialog(null, "There is no book with that ISBN"); 
-				 }
-				 
+				// int id = Integer.parseInt(ID.trim());
+
+				Book book = library.searchBookISBN(ISBN);
+				if (book != null) {
+					text.setText(book.toString());
+				} else {
+					JOptionPane.showMessageDialog(null, "There is no book with that ISBN");
+				}
+
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "Please enter a valid ISBN");
 			}
 		}
 
 	}
-	
+
 	private class SortAscendingAuthorListener implements ActionListener {
 
 		@Override
@@ -281,7 +287,7 @@ public class Dashboard {
 		}
 
 	}
-	
+
 	private class SortDescendingAuthorListener implements ActionListener {
 
 		@Override
@@ -296,7 +302,7 @@ public class Dashboard {
 		}
 
 	}
-	
+
 	private class SortAscendingYearListener implements ActionListener {
 
 		@Override
@@ -311,7 +317,7 @@ public class Dashboard {
 		}
 
 	}
-	
+
 	private class SortDescendingYearListener implements ActionListener {
 
 		@Override
