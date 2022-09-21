@@ -19,7 +19,21 @@ public class ListCreator {
 	public ListCreator() {
 //		Changed from LinkedList to ArrayList
 //		list = new LinkedList<Book>();
-		list = new ArrayList<Book>();
+//		list = new ArrayList<Book>();
+	}
+
+	public List createSpecificList(int answer) {
+		if (answer == 1) {
+			list = new LinkedList<Book>();
+			System.out.println(list.getClass());
+
+		}
+		if (answer == 2) {
+			list = new ArrayList<Book>();
+			System.out.println(list.getClass());
+
+		}
+		return list;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -155,7 +169,7 @@ public class ListCreator {
 		}
 		return list;
 	}
-	
+
 	public List<Book> selectionSortDescendingAuthor(List<Book> list) {
 		// One by one move boundary of unsorted subarray
 		for (int i = 0; i < list.size(); i++) {
@@ -191,7 +205,7 @@ public class ListCreator {
 		}
 		return list;
 	}
-	
+
 	public List<Book> selectionSortAscendingYear(List<Book> list) {
 		// One by one move boundary of unsorted subarray
 		for (int i = 0; i < list.size(); i++) {
@@ -227,7 +241,7 @@ public class ListCreator {
 		}
 		return list;
 	}
-	
+
 	public List<Book> selectionSortDescendingYear(List<Book> list) {
 		// One by one move boundary of unsorted subarray
 		for (int i = 0; i < list.size(); i++) {
@@ -263,31 +277,31 @@ public class ListCreator {
 		}
 		return list;
 	}
-	
-	public Book searchBookID(int id)  {
-		for(Book book: list)  {
-			if(book.getBookId() == id)  {
-				return book;
-			}
-		}
-		return null;
-	}
-	
 
-	public Book searchBookISBN(String isbn)  {
-		for(Book book: list)  {
-			if(book.getISBN().equals(isbn))  {
+	public Book searchBookID(int id) {
+		for (Book book : list) {
+			if (book.getBookId() == id) {
 				return book;
 			}
 		}
 		return null;
 	}
-	
+
+	public Book searchBookISBN(String isbn) {
+		for (Book book : list) {
+			if (book.getISBN().equals(isbn)) {
+				return book;
+			}
+		}
+		return null;
+	}
+
 	public static void main(String[] args) {
-		ListCreator lce = new ListCreator();
+
+//		ListCreator lce = new ListCreator();
 		// @SuppressWarnings("rawtypes")
-		lce.readFile();
-		List<Book> list = lce.getList();
+//		lce.readFile();
+//		List<Book> list = lce.getList();
 //		for (Book b : list) {
 //			System.out.println(b);
 //		}
@@ -297,10 +311,10 @@ public class ListCreator {
 //
 //		}
 //		lce.getTop10Books();
-		System.out.println(lce.selectionSortAscendingAuthor(list));
-		System.out.println(lce.selectionSortDescendingAuthor(list));
-		System.out.println(lce.selectionSortAscendingYear(list));
-		System.out.println(lce.selectionSortDescendingYear(list));
+//		System.out.println(lce.selectionSortAscendingAuthor(list));
+//		System.out.println(lce.selectionSortDescendingAuthor(list));
+//		System.out.println(lce.selectionSortAscendingYear(list));
+//		System.out.println(lce.selectionSortDescendingYear(list));
 
 	}
 }
