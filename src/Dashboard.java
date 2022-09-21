@@ -44,15 +44,17 @@ public class Dashboard {
 	private JScrollPane scrollPane;
 	private JTextArea text;
 	private ListCreator library = new ListCreator();
+	private int listType;
 
 	/**
 	 * Create the application.
 	 */
-	public Dashboard() {
+	public Dashboard() {                                                           //Passes answer to loadbooks method to create linked list or array
 		initialize();
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Type 1 to use LinkedList - Type 2 to use ArrayList");
 		int answer = scanner.nextInt();
+		listType = answer;
 		loadBooks(answer);
 		scanner.close();
 	}
@@ -197,7 +199,7 @@ public class Dashboard {
 		List<Book> books = library.getList();
 		library.selectionSortAverageRating(books);
 		System.out.println(library.getClass());
-		System.out.println(books.getClass());
+		System.out.println(books.getClass());              //Optional deletion before submission
 		String output = "";
 		for (int i = 0; i < 10; i++) {
 			output += books.get(i) + "\n";
@@ -236,8 +238,15 @@ public class Dashboard {
 			try {
 				String ID = JOptionPane.showInputDialog("Enter Book ID");
 				int id = Integer.parseInt(ID.trim());
-
-				Book book = library.searchBookID(id);
+				
+				Book book = null;
+				if(listType == 1) {
+					book = library.searchBookID(id);
+				}
+				else  {
+					List<Book> list = library.selectionSortAscendingID(library.getList());
+					book = library.searchBookIDBinary(id, list);
+				}
 				if (book != null) {
 					text.setText(book.toString());
 				} else {
@@ -257,9 +266,15 @@ public class Dashboard {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				String ISBN = JOptionPane.showInputDialog("Enter Book ISBN");
-				// int id = Integer.parseInt(ID.trim());
 
-				Book book = library.searchBookISBN(ISBN);
+				Book book = null;
+				if(listType == 1) {
+					book = library.searchBookISBN(ISBN);
+				}
+				else  {
+					List<Book> list = library.selectionSortAscendingISBN(library.getList());
+					book = library.searchBookISBNBinary(ISBN, list);
+				}
 				if (book != null) {
 					text.setText(book.toString());
 				} else {

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
+//import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class ListCreator {
 	@SuppressWarnings("rawtypes")
@@ -22,18 +22,18 @@ public class ListCreator {
 //		list = new ArrayList<Book>();
 	}
 
-	public List createSpecificList(int answer) {
+	public void createSpecificList(int answer) {              //Option for user to pick 
 		if (answer == 1) {
 			list = new LinkedList<Book>();
 			System.out.println(list.getClass());
 
 		}
-		if (answer == 2) {
+		if (answer == 2) {                                    //Option for user to pick
 			list = new ArrayList<Book>();
 			System.out.println(list.getClass());
 
 		}
-		return list;
+		//return list;                                        //It sets it here                
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -277,8 +277,80 @@ public class ListCreator {
 		}
 		return list;
 	}
+	
+	public List<Book> selectionSortAscendingID(List<Book> list) {
+		// One by one move boundary of unsorted subarray
+		for (int i = 0; i < list.size(); i++) {
 
-	public Book searchBookID(int id) {
+			// Find the minimum element in unsorted array
+			int min_index = i;
+			double minStr = list.get(i).getBookId();
+			for (int j = i + 1; j < list.size(); j++) {
+
+				/*
+				 * compareTo() will return a -ve value, if string1 (arr[j]) is smaller than
+				 * string2 (minStr)
+				 */
+				// If arr[j] is smaller than minStr
+
+				if (list.get(j).getBookId() < minStr) {
+					// Make arr[j] as minStr and update min_idx
+					minStr = list.get(j).getBookId();
+					min_index = j;
+					System.out.println("MIN INDEX" + min_index);
+					System.out.println(j);
+
+				}
+			}
+
+			// Swapping the minimum element
+			// found with the first element.
+			if (min_index != i) {
+				Book temp = list.get(min_index);
+				list.set(min_index, list.get(i));
+				list.set(i, temp);
+			}
+		}
+		return list;
+	}
+	
+	public List<Book> selectionSortAscendingISBN(List<Book> list) {
+		// One by one move boundary of unsorted subarray
+		for (int i = 0; i < list.size(); i++) {
+
+			// Find the minimum element in unsorted array
+			int min_index = i;
+			String minStr = list.get(i).getISBN();
+			for (int j = i + 1; j < list.size(); j++) {
+
+				/*
+				 * compareTo() will return a -ve value, if string1 (arr[j]) is smaller than
+				 * string2 (minStr)
+				 */
+				// If arr[j] is smaller than minStr
+
+				if (list.get(j).getISBN().compareTo(minStr) < 0) {
+					// Make arr[j] as minStr and update min_idx
+					minStr = list.get(j).getISBN();
+					min_index = j;
+					System.out.println("MIN INDEX" + min_index);
+					System.out.println(j);
+
+				}
+			}
+
+			// Swapping the minimum element
+			// found with the first element.
+			if (min_index != i) {
+				Book temp = list.get(min_index);
+				list.set(min_index, list.get(i));
+				list.set(i, temp);
+			}
+		}
+		return list;
+	}
+
+	public Book searchBookID(int id) {                          //Linear search by id
 		for (Book book : list) {
 			if (book.getBookId() == id) {
 				return book;
@@ -287,10 +359,48 @@ public class ListCreator {
 		return null;
 	}
 
-	public Book searchBookISBN(String isbn) {
+	public Book searchBookISBN(String isbn) {                  //Linear search by isbn
 		for (Book book : list) {
 			if (book.getISBN().equals(isbn)) {
 				return book;
+			}
+		}
+		return null;
+	}
+	
+	public Book searchBookIDBinary(int id, List<Book> list)  {
+		int low = 0;
+		int high = list.size() -1;
+		
+		while(low <= high)  {
+			int mid = (low + high) / 2;
+			if(list.get(mid).getBookId()==id)  {
+				return list.get(mid);
+			}
+			else if(id < list.get(mid).getBookId())  {
+				high = mid - 1;
+			}
+			else  {
+				low = mid + 1;
+			}
+		}
+		return null;
+	}
+	
+	public Book searchBookISBNBinary(String isbn, List<Book> list)  {
+		int low = 0;
+		int high = list.size() -1;
+		
+		while(low <= high)  {
+			int mid = (low + high) / 2;
+			if(list.get(mid).getISBN().compareTo(isbn)==0)  {
+				return list.get(mid);
+			}
+			else if(isbn.compareTo(list.get(mid).getISBN())< 0)  {
+				high = mid - 1;
+			}
+			else  {
+				low = mid + 1;
 			}
 		}
 		return null;
