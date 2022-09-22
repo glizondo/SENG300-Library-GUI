@@ -26,12 +26,12 @@ public class ListCreator {
 	public void createSpecificList(int answer) { // Option for user to pick
 		if (answer == 1) {
 			list = new LinkedList<Book>();
-			System.out.println(list.getClass());
+//			System.out.println(list.getClass());
 
 		}
 		if (answer == 2) { // Option for user to pick
 			list = new ArrayList<Book>();
-			System.out.println(list.getClass());
+//			System.out.println(list.getClass());
 
 		}
 		// return list; //It sets it here
@@ -45,12 +45,12 @@ public class ListCreator {
 	public void readFile() {
 
 		try {
-			FileInputStream fileReader = new FileInputStream("books.csv");
+			FileInputStream fileReader = new FileInputStream("books10k.csv");
 			Scanner input = new Scanner(fileReader);
 			input.nextLine();
 			while (input.hasNext()) {
 				String line = input.nextLine();
-				System.out.println(line);
+//				System.out.println(line);
 				String[] fields = line.split(",");
 				if (fields.length == 23) {
 					int bookId = Integer.parseInt(fields[0]);
@@ -61,7 +61,12 @@ public class ListCreator {
 					String iSBN = fields[5];
 					String iSBN13 = fields[6];
 					String authors = fields[7];
-					double originalPublicationYear = Double.parseDouble(fields[8]);
+					double originalPublicationYear;
+					if (fields[8].isEmpty()) {
+						originalPublicationYear = 0.0;
+					} else {
+						originalPublicationYear = Double.parseDouble(fields[8]);
+					}
 					String originalTitle = fields[9];
 					String title = fields[10];
 					String languageCode = fields[11];
@@ -384,53 +389,39 @@ public class ListCreator {
 		return null;
 	}
 
-	public Book testSearchBookID(int id) { // Test linear search by id
+	public String testLinearSearch() { // Tests linear search for an id - change book file in readFile() to books10k
+										// for better appreciation of processing time - Returns long variable of total
+										// time
+		ListCreator library = new ListCreator();
+		library.createSpecificList(1);
+		library.readFile();
+		List<Book> books = library.getList();
 		long startTime = System.currentTimeMillis();
-		Book book = new Book(id, id, id, id, id, null, null, null, id, null, null, null, id, id, id, id, id, id, id, id,
-				id, null, null);
-		int limit = 1000;
-		for (int i = 0; i < limit; i++) {
-			if (book.getBookId() == id) {
-			}
-		}
+		library.searchBookID(8000);
 		long endTime = System.currentTimeMillis();
-		long totalTime = startTime - endTime;
-		System.out.println("Start time = " + startTime + " End time = " + endTime + " Total time = " + totalTime
-				+ " milliseconds or " + (totalTime * 0.001) + " seconds");
-		return book;
+		long totalTime = endTime - startTime;
+		return "Total time for linear search = " + (totalTime * 0.001) + " seconds";
+	}
+
+	public String testBinarySearch() { // Tests binary search for an id - change book file in readFile() to books10k
+		// for better appreciation of processing time - Returns long variable of total
+		// time
+		ListCreator library = new ListCreator();
+		library.createSpecificList(2);
+		library.readFile();
+		List<Book> books = library.getList();
+		long startTime = System.currentTimeMillis();
+		library.selectionSortAscendingID(library.getList()); // Organizes the list by ascending ID
+		library.searchBookIDBinary(8000, books);
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		return "Total time for binary search = " + (totalTime * 0.001) + " seconds";
 	}
 
 	public static void main(String[] args) {
-
 		ListCreator library = new ListCreator();
-		int answer = 2;
-		library.createSpecificList(answer);
-		library.readFile();
-		List<Book> books = library.getList();
-		library.selectionSortAverageRating(books);
-		System.out.println(library.testSearchBookID(10000));
-		library.testSearchBookID(10000);
-
-//		int[] array = { 2, 5, 6, 1, 3 };
-
-//		ListCreator lce = new ListCreator();
-//		 @SuppressWarnings("rawtypes")
-//		lce.readFile();
-//		List<Book> list = lce.getList();
-//		System.out.println(list);
-//		for (Book b : list) {
-//			System.out.println(b);
-//		}
-//		System.out.println(list.get(12));
-//		for (int i = 0; i < list.size(); i++) {
-//			System.out.println(list.get(i).getAverageRating());
-//
-//		}
-//		lce.getTop10Books();
-//		System.out.println(lce.selectionSortAscendingAuthor(list));
-//		System.out.println(lce.selectionSortDescendingAuthor(list));
-//		System.out.println(lce.selectionSortAscendingYear(list));
-//		System.out.println(lce.selectionSortDescendingYear(list));
+		System.out.println(library.testLinearSearch());
+		System.out.println(library.testBinarySearch());
 
 	}
 }
