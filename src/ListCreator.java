@@ -417,11 +417,26 @@ public class ListCreator {
 		long totalTime = endTime - startTime;
 		return "Total time for binary search = " + (totalTime * 0.001) + " seconds";
 	}
+	
+	public String testBinarySearchNoSorting() { // Tests binary search for an id with no sorting - change book file in readFile() to books10k
+		// for better appreciation of processing time - Returns long variable of total
+		// time
+		ListCreator library = new ListCreator();
+		library.createSpecificList(2);
+		library.readFile();
+		List<Book> books = library.getList();
+		long startTime = System.currentTimeMillis();
+		library.searchBookIDBinary(8000, books);
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		return "Total time for binary search without sorting (the books are already sorted previously) = " + (totalTime * 0.001) + " seconds";
+	}
 
 	public static void main(String[] args) {
 		ListCreator library = new ListCreator();
 		System.out.println(library.testLinearSearch());
 		System.out.println(library.testBinarySearch());
+		System.out.println(library.testBinarySearchNoSorting());
 
 	}
 }
