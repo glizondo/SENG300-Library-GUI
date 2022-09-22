@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,18 +23,18 @@ public class ListCreator {
 //		list = new ArrayList<Book>();
 	}
 
-	public void createSpecificList(int answer) {              //Option for user to pick 
+	public void createSpecificList(int answer) { // Option for user to pick
 		if (answer == 1) {
 			list = new LinkedList<Book>();
 			System.out.println(list.getClass());
 
 		}
-		if (answer == 2) {                                    //Option for user to pick
+		if (answer == 2) { // Option for user to pick
 			list = new ArrayList<Book>();
 			System.out.println(list.getClass());
 
 		}
-		//return list;                                        //It sets it here                
+		// return list; //It sets it here
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -114,25 +115,6 @@ public class ListCreator {
 		}
 		return list;
 	}
-
-//	public int indexHighestAscendingAuthor(List<Book> list, int start) {
-//		int highIndex = start;
-//		for (int i = start; i < list.size(); i++) {
-//			if (list.get(i).getAuthors().startsWith("A") == list.get(highIndex).getAuthors().startsWith("A")) {
-//				highIndex = i;
-//			}
-//		}
-//		return highIndex;
-//	}
-//
-//	public List selectionSortAscendingAuthor(List<Book> list) {
-//		for (int i = 0; i < list.size(); i++) {
-//			int j = indexHighestAverageRating(list, i);
-//			swapElements(list, i, j);
-//		}
-//
-//		return list;
-//	}
 
 	public List<Book> selectionSortAscendingAuthor(List<Book> list) {
 		// One by one move boundary of unsorted subarray
@@ -277,7 +259,7 @@ public class ListCreator {
 		}
 		return list;
 	}
-	
+
 	public List<Book> selectionSortAscendingID(List<Book> list) {
 		// One by one move boundary of unsorted subarray
 		for (int i = 0; i < list.size(); i++) {
@@ -313,7 +295,7 @@ public class ListCreator {
 		}
 		return list;
 	}
-	
+
 	public List<Book> selectionSortAscendingISBN(List<Book> list) {
 		// One by one move boundary of unsorted subarray
 		for (int i = 0; i < list.size(); i++) {
@@ -350,7 +332,7 @@ public class ListCreator {
 		return list;
 	}
 
-	public Book searchBookID(int id) {                          //Linear search by id
+	public Book searchBookID(int id) { // Linear search by id
 		for (Book book : list) {
 			if (book.getBookId() == id) {
 				return book;
@@ -359,7 +341,7 @@ public class ListCreator {
 		return null;
 	}
 
-	public Book searchBookISBN(String isbn) {                  //Linear search by isbn
+	public Book searchBookISBN(String isbn) { // Linear search by isbn
 		for (Book book : list) {
 			if (book.getISBN().equals(isbn)) {
 				return book;
@@ -367,51 +349,75 @@ public class ListCreator {
 		}
 		return null;
 	}
-	
-	public Book searchBookIDBinary(int id, List<Book> list)  {
+
+	public Book searchBookIDBinary(int id, List<Book> list) {
 		int low = 0;
-		int high = list.size() -1;
-		
-		while(low <= high)  {
+		int high = list.size() - 1;
+
+		while (low <= high) {
 			int mid = (low + high) / 2;
-			if(list.get(mid).getBookId()==id)  {
+			if (list.get(mid).getBookId() == id) {
 				return list.get(mid);
-			}
-			else if(id < list.get(mid).getBookId())  {
+			} else if (id < list.get(mid).getBookId()) {
 				high = mid - 1;
-			}
-			else  {
+			} else {
 				low = mid + 1;
 			}
 		}
 		return null;
 	}
-	
-	public Book searchBookISBNBinary(String isbn, List<Book> list)  {
+
+	public Book searchBookISBNBinary(String isbn, List<Book> list) {
 		int low = 0;
-		int high = list.size() -1;
-		
-		while(low <= high)  {
+		int high = list.size() - 1;
+
+		while (low <= high) {
 			int mid = (low + high) / 2;
-			if(list.get(mid).getISBN().compareTo(isbn)==0)  {
+			if (list.get(mid).getISBN().compareTo(isbn) == 0) {
 				return list.get(mid);
-			}
-			else if(isbn.compareTo(list.get(mid).getISBN())< 0)  {
+			} else if (isbn.compareTo(list.get(mid).getISBN()) < 0) {
 				high = mid - 1;
-			}
-			else  {
+			} else {
 				low = mid + 1;
 			}
 		}
 		return null;
+	}
+
+	public Book testSearchBookID(int id) { // Test linear search by id
+		long startTime = System.currentTimeMillis();
+		Book book = new Book(id, id, id, id, id, null, null, null, id, null, null, null, id, id, id, id, id, id, id, id,
+				id, null, null);
+		int limit = 1000;
+		for (int i = 0; i < limit; i++) {
+			if (book.getBookId() == id) {
+			}
+		}
+		long endTime = System.currentTimeMillis();
+		long totalTime = startTime - endTime;
+		System.out.println("Start time = " + startTime + " End time = " + endTime + " Total time = " + totalTime
+				+ " milliseconds or " + (totalTime * 0.001) + " seconds");
+		return book;
 	}
 
 	public static void main(String[] args) {
 
+		ListCreator library = new ListCreator();
+		int answer = 2;
+		library.createSpecificList(answer);
+		library.readFile();
+		List<Book> books = library.getList();
+		library.selectionSortAverageRating(books);
+		System.out.println(library.testSearchBookID(10000));
+		library.testSearchBookID(10000);
+
+//		int[] array = { 2, 5, 6, 1, 3 };
+
 //		ListCreator lce = new ListCreator();
-		// @SuppressWarnings("rawtypes")
+//		 @SuppressWarnings("rawtypes")
 //		lce.readFile();
 //		List<Book> list = lce.getList();
+//		System.out.println(list);
 //		for (Book b : list) {
 //			System.out.println(b);
 //		}
